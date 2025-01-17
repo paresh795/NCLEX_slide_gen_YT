@@ -1,6 +1,5 @@
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { ArrowDown, ArrowUp, ArrowLeft, ArrowRight, LayoutGrid } from "lucide-react";
