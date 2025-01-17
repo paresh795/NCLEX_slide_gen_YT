@@ -1,5 +1,5 @@
 import { OpenAI } from 'openai';
-import { NCLEXQuestion, ParseResponse } from './types';
+import { ParseResponse } from './types';
 
 const SYSTEM_PROMPT = `You are an expert NCLEX question parser. Parse the provided nursing questions into a structured format.
 Return a JSON object with a "questions" array containing objects with these exact fields:
@@ -73,9 +73,9 @@ export async function parseWithLLM(text: string, apiKey: string): Promise<ParseR
     }
 
     // Validate each question's structure
-    parsed.questions.forEach((q: any, idx: number) => {
-      if (!q.questionStem || !Array.isArray(q.answerChoices) || !q.correctAnswer || !q.rationale) {
-        console.error(`[PARSE-LLM] Question ${idx} is missing required fields:`, q);
+    parsed.questions.forEach((question: { questionStem: string; answerChoices: string[]; correctAnswer: string; rationale: string }, idx: number) => {
+      if (!question.questionStem || !Array.isArray(question.answerChoices) || !question.correctAnswer || !question.rationale) {
+        console.error(`[PARSE-LLM] Question ${idx} is missing required fields:`, question);
         throw new Error(`Question ${idx} is missing required fields`);
       }
     });

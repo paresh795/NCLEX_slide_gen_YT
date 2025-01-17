@@ -83,7 +83,7 @@ export default function SettingsPage() {
             </div>
 
             <div className="text-sm text-gray-500">
-              <p>Don't have an API key? Get one from the{' '}
+              <p>Don&apos;t have an API key? Get one from the{' '}
                 <a 
                   href="https://platform.openai.com/api-keys" 
                   target="_blank" 

@@ -1,19 +1,10 @@
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
+import { ArrowDown, ArrowUp, ArrowLeft, ArrowRight, LayoutGrid } from "lucide-react";
 import { SlideAStyle } from "./StyleControlsA";
-import { 
-  ArrowDown, 
-  ArrowUp, 
-  ArrowLeft, 
-  ArrowRight,
-  MoveHorizontal,
-  MoveVertical,
-  Maximize2,
-  Minimize2,
-  LayoutGrid
-} from "lucide-react";
 
 interface LayoutControlsProps {
   style: SlideAStyle;

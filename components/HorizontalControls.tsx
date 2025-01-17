@@ -1,5 +1,4 @@
 import { Card } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { SlideAStyle } from "./StyleControlsA";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -7,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Bold, Italic, Underline, ArrowDown, ArrowUp, ArrowLeft, ArrowRight, LayoutGrid } from "lucide-react";
-import { motion } from "framer-motion";
 
 interface HorizontalControlsProps {
   style?: SlideAStyle;
@@ -16,7 +14,6 @@ interface HorizontalControlsProps {
   onUnlockStyle: () => void;
   onPropagateStyle: () => void;
   isLocked?: boolean;
-  slideType: 'question' | 'answer';
 }
 
 const defaultStyle: SlideAStyle = {
@@ -56,8 +53,7 @@ export default function HorizontalControls({
   onLockStyle,
   onUnlockStyle,
   onPropagateStyle,
-  isLocked = false,
-  slideType
+  isLocked = false
 }: HorizontalControlsProps) {
   // Use provided style or default style
   const style = propStyle || defaultStyle;

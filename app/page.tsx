@@ -231,14 +231,11 @@ export default function Home() {
 
   const handleSlideNavigation = (direction: 'prev' | 'next') => {
     setSlideState(prev => {
-      let nextState = { ...prev };
-
+      const nextState = { ...prev };
       if (direction === 'next') {
         if (prev.currentSlideType === 'question') {
-          // Move to answer slide of current question
           nextState.currentSlideType = 'answer';
         } else {
-          // Move to question slide of next question
           nextState.currentSlideType = 'question';
           nextState.currentQuestionIndex = Math.min(
             questions.length - 1,
@@ -247,10 +244,8 @@ export default function Home() {
         }
       } else {
         if (prev.currentSlideType === 'answer') {
-          // Move to question slide of current question
           nextState.currentSlideType = 'question';
         } else {
-          // Move to answer slide of previous question
           nextState.currentSlideType = 'answer';
           nextState.currentQuestionIndex = Math.max(
             0,
@@ -258,7 +253,6 @@ export default function Home() {
           );
         }
       }
-
       return nextState;
     });
   };
@@ -478,6 +472,18 @@ export default function Home() {
               <div className="flex gap-3">
                 <Button
                   variant="outline"
+                  onClick={getCurrentStyle()?.isLocked ? handleStyleUnlock : () => handleStyleLock(getCurrentStyle()?.style)}
+                  className={`hover:shadow-md transition-all ${
+                    getCurrentStyle()?.isLocked 
+                      ? 'border-green-500 text-green-600 hover:bg-green-50'
+                      : 'border-blue-500 text-blue-600 hover:bg-blue-50'
+                  }`}
+                >
+                  {getCurrentStyle()?.isLocked ? 'Unlock Style' : 'Lock Style'}
+                </Button>
+                <div className="w-px h-6 bg-gray-200 my-auto" /> {/* Separator */}
+                <Button
+                  variant="outline"
                   onClick={() => handleSlideNavigation('prev')}
                   disabled={slideState.currentQuestionIndex === 0 && slideState.currentSlideType === 'question'}
                   className="hover:shadow-md transition-all"
@@ -617,7 +623,6 @@ export default function Home() {
                   onUnlockStyle={handleStyleUnlock}
                   onPropagateStyle={handlePropagateStyle}
                   isLocked={getCurrentStyle()?.isLocked}
-                  slideType={slideState.currentSlideType}
                 />
               </motion.div>
 
