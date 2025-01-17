@@ -4,6 +4,7 @@ import { parseWithLLM } from '@/lib/openaiPrompt';
 export async function POST(request: Request) {
   try {
     const { text } = await request.json();
+    const apiKey = request.headers.get('x-api-key');
 
     if (!text) {
       console.log('[API] Error: No text provided');
@@ -13,12 +14,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
-      console.log('[API] Error: OpenAI API key not configured');
+      console.log('[API] Error: No API key provided');
       return NextResponse.json(
-        { error: 'OpenAI API key not configured' },
-        { status: 500 }
+        { error: 'Please provide your OpenAI API key in the settings' },
+        { status: 401 }
       );
     }
 

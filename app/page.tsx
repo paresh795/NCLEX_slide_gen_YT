@@ -12,6 +12,8 @@ import html2canvas from 'html2canvas';
 import JSZip from 'jszip';
 import { motion } from "framer-motion";
 import { Stethoscope } from "lucide-react";
+import Link from "next/link";
+import { Settings } from "lucide-react";
 
 interface QuestionStyle {
   isLocked: boolean;
@@ -92,10 +94,17 @@ export default function Home() {
       setLoading(true);
       setError('');
       
+      const apiKey = localStorage.getItem('openai_api_key');
+      if (!apiKey) {
+        setError('Please set your OpenAI API key in the settings first');
+        return;
+      }
+      
       const response = await fetch('/api/parse-llm', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'x-api-key': apiKey
         },
         body: JSON.stringify({
           text: inputText
@@ -420,16 +429,31 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <motion.div
-              className="inline-flex items-center justify-center gap-3"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            >
-              <Stethoscope className="w-8 h-8 text-blue-600" />
-              <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                NCLEX Slide Generator
-              </h1>
-            </motion.div>
+            <div className="flex items-center justify-between">
+              <div className="flex-1" />
+              <motion.div
+                className="inline-flex items-center justify-center gap-3"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                <Stethoscope className="w-8 h-8 text-blue-600" />
+                <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                  NCLEX Slide Generator
+                </h1>
+              </motion.div>
+              <div className="flex-1 flex justify-end">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  asChild
+                  className="hover:bg-gray-100"
+                >
+                  <Link href="/settings">
+                    <Settings className="w-5 h-5 text-gray-600" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
             <motion.p 
               className="text-gray-500 max-w-2xl mx-auto text-lg"
               initial={{ opacity: 0 }}
