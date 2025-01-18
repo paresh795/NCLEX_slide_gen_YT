@@ -1,4 +1,5 @@
 export interface NCLEXQuestion {
+  questionNumber: number;
   questionStem: string;
   answerChoices: string[];
   correctAnswer: string;

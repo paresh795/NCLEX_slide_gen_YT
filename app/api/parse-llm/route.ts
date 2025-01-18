@@ -33,6 +33,27 @@ export async function POST(request: Request) {
       );
     }
 
+    // Validate question numbers and answer format
+    if (result.questions) {
+      result.questions.forEach((question, index) => {
+        // Ensure question number is set
+        if (!question.questionNumber) {
+          question.questionNumber = index + 1;
+        }
+        
+        // Ensure correct answer includes the full text
+        if (!question.correctAnswer.includes('.')) {
+          const answerLetter = question.correctAnswer;
+          const fullAnswer = question.answerChoices.find(choice => 
+            choice.startsWith(answerLetter + '.')
+          );
+          if (fullAnswer) {
+            question.correctAnswer = fullAnswer;
+          }
+        }
+      });
+    }
+
     console.log('[API] Successfully parsed', result.questions?.length, 'questions');
     return NextResponse.json(result);
 

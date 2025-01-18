@@ -31,7 +31,7 @@ export default function SlidePreviewA({ question, style, showAnswerRationale = f
 
           {showAnswerRationale ? (
             <>
-              {/* Correct Answer */}
+              {/* Answer Section */}
               <div
                 className="absolute transform -translate-x-1/2"
                 style={{
@@ -44,14 +44,19 @@ export default function SlidePreviewA({ question, style, showAnswerRationale = f
                   width: '100%',
                   textAlign: style.questionAlignment,
                   transform: 'translate(-50%, 0)',
-                  lineHeight: '1.4',
-                  fontWeight: style.questionFormat.bold ? 'bold' : 'normal',
-                  fontStyle: style.questionFormat.italic ? 'italic' : 'normal',
-                  textDecoration: style.questionFormat.underline ? 'underline' : 'none',
                 }}
               >
-                <div className="font-medium mb-2">Correct Answer:</div>
-                {question.correctAnswer}
+                <div
+                  style={{
+                    lineHeight: '1.4',
+                    fontWeight: style.questionFormat.bold ? 'bold' : 'normal',
+                    fontStyle: style.questionFormat.italic ? 'italic' : 'normal',
+                    textDecoration: style.questionFormat.underline ? 'underline' : 'none',
+                  }}
+                >
+                  <div className="font-medium mb-2">Correct Answer:</div>
+                  {question.correctAnswer}
+                </div>
               </div>
 
               {/* Rationale */}
@@ -79,7 +84,7 @@ export default function SlidePreviewA({ question, style, showAnswerRationale = f
             </>
           ) : (
             <>
-              {/* Question Text */}
+              {/* Question Text with Number */}
               <div
                 className="absolute transform -translate-x-1/2"
                 style={{
@@ -92,13 +97,31 @@ export default function SlidePreviewA({ question, style, showAnswerRationale = f
                   width: '100%',
                   textAlign: style.questionAlignment,
                   transform: 'translate(-50%, 0)',
-                  lineHeight: '1.4',
-                  fontWeight: style.questionFormat.bold ? 'bold' : 'normal',
-                  fontStyle: style.questionFormat.italic ? 'italic' : 'normal',
-                  textDecoration: style.questionFormat.underline ? 'underline' : 'none',
                 }}
               >
-                {question.questionStem}
+                {/* Question Number - Only shown on question slides */}
+                <div 
+                  style={{
+                    fontSize: `${style.questionSize * 0.8}px`,
+                    marginBottom: '1em',
+                    opacity: 0.8,
+                    fontWeight: 'bold'
+                  }}
+                >
+                  Question {question.questionNumber}
+                </div>
+
+                {/* Question Text */}
+                <div
+                  style={{
+                    lineHeight: '1.4',
+                    fontWeight: style.questionFormat.bold ? 'bold' : 'normal',
+                    fontStyle: style.questionFormat.italic ? 'italic' : 'normal',
+                    textDecoration: style.questionFormat.underline ? 'underline' : 'none',
+                  }}
+                >
+                  {question.questionStem}
+                </div>
               </div>
 
               {/* Answer Choices */}

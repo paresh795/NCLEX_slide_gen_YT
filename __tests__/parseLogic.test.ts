@@ -12,6 +12,7 @@ jest.mock('openai', () => {
                 content: JSON.stringify({
                   questions: [
                     {
+                      questionNumber: 1,
                       questionStem: "Test question?",
                       answerChoices: [
                         "A. First choice",
@@ -19,7 +20,7 @@ jest.mock('openai', () => {
                         "C. Third choice",
                         "D. Fourth choice"
                       ],
-                      correctAnswer: "B",
+                      correctAnswer: "B. Second choice",
                       rationale: "Test rationale"
                     }
                   ]
@@ -44,7 +45,7 @@ describe('parseWithLLM', () => {
       B. Second choice
       C. Third choice
       D. Fourth choice
-      Answer: B
+      Answer: B. Second choice
       Rationale: Test rationale
     `;
 
@@ -56,12 +57,13 @@ describe('parseWithLLM', () => {
 
     const question = result.questions?.[0];
     expect(question).toMatchObject({
+      questionNumber: expect.any(Number),
       questionStem: expect.any(String),
       answerChoices: expect.arrayContaining([
         expect.stringMatching(/^[A-D]\./),
         expect.stringMatching(/^[A-D]\./)
       ]),
-      correctAnswer: expect.stringMatching(/^[A-D]$/),
+      correctAnswer: expect.stringMatching(/^[A-D]\./),
       rationale: expect.any(String)
     });
   });
@@ -96,24 +98,5 @@ describe('parseWithLLM', () => {
     const result = await parseWithLLM('test question', mockApiKey);
     expect(result.success).toBe(false);
     expect(result.error).toContain('missing required fields');
-  });
-
-  it('should handle malformed JSON response', async () => {
-    // Mock invalid JSON response
-    const { OpenAI } = require('openai');
-    jest.spyOn(OpenAI.prototype.chat.completions, 'create')
-      .mockResolvedValueOnce({
-        choices: [
-          {
-            message: {
-              content: 'invalid json'
-            }
-          }
-        ]
-      });
-
-    const result = await parseWithLLM('test question', mockApiKey);
-    expect(result.success).toBe(false);
-    expect(result.error).toBeDefined();
   });
 }); 

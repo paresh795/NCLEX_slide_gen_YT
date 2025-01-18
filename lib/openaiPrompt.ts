@@ -6,9 +6,10 @@ Return a JSON object with a "questions" array containing objects with these exac
 {
   "questions": [
     {
+      "questionNumber": 1,
       "questionStem": "The complete question text",
       "answerChoices": ["A. First choice", "B. Second choice", ...],
-      "correctAnswer": "A", // Just the letter
+      "correctAnswer": "A. First choice",
       "rationale": "The explanation"
     },
     // ... more questions
@@ -17,6 +18,7 @@ Return a JSON object with a "questions" array containing objects with these exac
 
 const EXAMPLE_OUTPUT = {
   questions: [{
+    questionNumber: 1,
     questionStem: "A client in active labor is receiving oxytocin (Pitocin) for induction. The nurse notices that the fetal heart rate (FHR) has dropped to 90 beats per minute. What is the nurse's priority action?",
     answerChoices: [
       "A. Stop the oxytocin infusion immediately",
@@ -24,7 +26,7 @@ const EXAMPLE_OUTPUT = {
       "C. Administer oxygen at 10 L/min via face mask",
       "D. Call the healthcare provider"
     ],
-    correctAnswer: "A",
+    correctAnswer: "A. Stop the oxytocin infusion immediately",
     rationale: "The priority action is to stop the oxytocin infusion immediately when fetal distress is noted (FHR < 110). This action will help prevent further compromise to the fetus."
   }]
 };
